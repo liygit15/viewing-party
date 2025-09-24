@@ -20,6 +20,8 @@ def add_to_watched(user_data, movie):
     user_data["watched"].append(movie)
     return user_data
 
+
+
 # Adds movie to watchlist
 def add_to_watchlist(user_data,movie):
     user_data["watchlist"].append(movie)
@@ -37,6 +39,17 @@ def watch_movie(user_data,title):
     return copy_of_user_data
 
 # ------------- WAVE 2 --------------------
+
+#Function1 solution1
+def get_watched_avg_rating(user_data):
+    sum_rating = 0
+    avg_rating = 0
+    for movie in user_data["watched"]:
+        sum_rating += movie["rating"]
+        avg_rating = sum_rating / len(user_data["watched"])
+    
+    return avg_rating
+
 
 # counts the occurance of an object in another object, such as a letter in a
 # string or an item in a list. count_what = what you are wanting to count.
@@ -76,11 +89,22 @@ def get_most_watched_genre(user_data):
 
 # ------------- WAVE 3 --------------------
 
+# Function1 Solution 3: use set to make it simple,time complexity: n^2, space complexity: f * m
+def get_unique_watched(user_data):
+    friend_watched = set()
+    unique_user_watched = []
+    for friend in user_data["friends"]:
+        for movie in friend["watched"]:
+            friend_watched.add(movie["title"])
+            
+    for movie in user_data["watched"]:
+        if movie["title"] not in friend_watched:
+            unique_user_watched.append(movie)
+    
+    return unique_user_watched
+
+
 def get_friends_unique_watched(user_data):
-    #comparing the first set of values to the second set of values
-    #both are lists of dictionaries, each repping a movie
-    #camparing the titles in each dict in list 1 to the titles in each dict
-    #in list 2.
     user_movie_titles = []
     for watched_list in user_data.values():
         for movie in watched_list:
@@ -106,8 +130,6 @@ def get_friends_unique_watched(user_data):
     return unique_watched_full_dicts
 
 
-
-        
 # -----------------------------------------
 # ------------- WAVE 4 --------------------
 # -----------------------------------------
