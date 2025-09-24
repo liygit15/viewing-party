@@ -17,7 +17,8 @@ def create_movie(title, genre, rating):
 # user_data is a dictionary with a "watched" key and a value that's a list of
 # dictionaries. 
 def add_to_watched(user_data, movie):
-    return user_data["watched"].append(movie)
+    user_data["watched"].append(movie)
+    return user_data
 
 
 
@@ -39,16 +40,34 @@ def watch_movie(user_data,title):
     return copy_of_user_data
 
 
-# -----------------------------------------
+
 # ------------- WAVE 2 --------------------
-# -----------------------------------------
+#Function1 solution1
+def get_watched_avg_rating(user_data):
+    sum_rating = 0
+    avg_rating = 0
+    for movie in user_data["watched"]:
+        sum_rating += movie["rating"]
+        avg_rating = sum_rating / len(user_data["watched"])
+    
+    return avg_rating
 
 
-# -----------------------------------------
+
 # ------------- WAVE 3 --------------------
-# -----------------------------------------
-
-        
+# Function1 Solution 3: use set to make it simple,time complexity: n^2, space complexity: f * m
+def get_unique_watched(user_data):
+    friend_watched = set()
+    unique_user_watched = []
+    for friend in user_data["friends"]:
+        for movie in friend["watched"]:
+            friend_watched.add(movie["title"])
+            
+    for movie in user_data["watched"]:
+        if movie["title"] not in friend_watched:
+            unique_user_watched.append(movie)
+    
+    return unique_user_watched
 # -----------------------------------------
 # ------------- WAVE 4 --------------------
 # -----------------------------------------
