@@ -92,7 +92,7 @@ def get_friends_unique_watched(user_data):
     
     for friend in user_data["friends"]:
         for movie in friend["watched"]:
-            if movie["title"] not in user_watched:
+            if movie["title"] not in user_watched :
                 friends_unique_watched.append(movie)
 
     return friends_unique_watched
@@ -134,15 +134,20 @@ def get_new_rec_by_genre(user_data):
 
     return movie_recs
 
+
+# liyan_solution
 def get_rec_from_favorites(user_data):
-    recommended_movies = []
+    recommendation = []
+    friend_movies = []
+    for friend in user_data["friends"]:
+        for movie in friend["watched"]:
+            if movie not in friend_movies:
+                friend_movies.append(movie)
 
-    for movie in user_data["favorites"]:
+    for my_movie in user_data["favorites"]:
+        if my_movie not in friend_movies:
+            recommendation.append(my_movie)
+        
 
-        if user_data["friends"] and (movie not in user_data["friends"][0]["watched"]):
-            recommended_movies.append(movie)
-        elif not user_data["friends"]:
-            recommended_movies.append(movie)
+    return recommendation
 
-    return recommended_movies
-# ------------- WAVE 5 --------------------
