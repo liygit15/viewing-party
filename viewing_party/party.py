@@ -1,7 +1,5 @@
 # ------------- WAVE 1 --------------------
 
-# If title, genre, and rating are all truthy, return a dictionary with the
-# movie data inside. If any of the given arguments are falsy, return None.
 def create_movie(title, genre, rating):
     if title and genre and rating:
         new_movie = {
@@ -13,14 +11,9 @@ def create_movie(title, genre, rating):
     else:
         return None
 
-# Adds movie to user_data. Each movie is a dictionary, formatted like new_movie.
-# user_data is a dictionary with a "watched" key and a value that's a list of
-# dictionaries. 
 def add_to_watched(user_data, movie):
     user_data["watched"].append(movie)
     return user_data
-
-
 
 # Adds movie to watchlist
 def add_to_watchlist(user_data,movie):
@@ -50,13 +43,6 @@ def get_watched_avg_rating(user_data):
     
     return avg_rating
 
-
-# counts the occurance of an object in another object, such as a letter in a
-# string or an item in a list. count_what = what you are wanting to count.
-# in_what = where that item is, like in a list or a string.
-# EXP: to count the number of "dog" in animals_list, call counting("dog", 
-# animals_list). It will return an int of the number of times "dog" shows up
-# in animals_list.
 def counting(count_what, in_what):
     total_count = 0
     for i in in_what:
@@ -65,19 +51,13 @@ def counting(count_what, in_what):
 
     return total_count
 
-# Goes through the movie dictionaries in the list, which is the value of
-# "watched", and creates a list of genres from the "genre" key. Iterates 
-# through that list and compares each genre to the current most watched.
-# returns the most frequently watched genre. if the "watched" key is associated
-# with an empty list instead of movie dictionaries, return None.
 def get_most_watched_genre(user_data):
     if not user_data["watched"]:
         return None
 
     genre_list = []
-    for watched_list in user_data.values():
-        for movie in watched_list:
-            genre_list.append(movie["genre"])
+    for movie in user_data["watched"]:
+        genre_list.append(movie["genre"])
     
     most_watched_genre = genre_list[0]
     for genre in genre_list:
@@ -103,8 +83,21 @@ def get_unique_watched(user_data):
     
     return unique_user_watched
 
-
 def get_friends_unique_watched(user_data):
+    user_watched = set()
+    friends_unique_watched = []
+
+    for movie in user_data["watched"]:
+        user_watched.add(movie["title"])
+    
+    for friend in user_data["friends"]:
+        for movie in friend["watched"]:
+            if movie["title"] not in user_watched:
+                friends_unique_watched.append(movie)
+
+    return friends_unique_watched
+
+    
 
 # -----------------------------------------
 # ------------- WAVE 4 --------------------
@@ -112,5 +105,27 @@ def get_friends_unique_watched(user_data):
 
 # -----------------------------------------
 # ------------- WAVE 5 --------------------
-# -----------------------------------------
 
+def get_new_rec_by_genre(user_data):
+    movie_recs = []
+    if not user_data["friends"][0]["watched"]:
+        return None
+
+    for movie in user_data["friends"][0]["watched"]:
+        if movie["genre"] == get_most_watched_genre(user_data) and (movie 
+                                            not in user_data["watched"]):
+            movie_recs.append(movie)
+
+    return movie_recs
+
+def get_rec_from_favorites(user_data):
+    recommended_movies = []
+
+    for movie in user_data["favorites"]:
+
+        if user_data["friends"] and (movie not in user_data["friends"][0]["watched"]):
+            recommended_movies.append(movie)
+        elif not user_data["friends"]:
+            recommended_movies.append(movie)
+
+    return recommended_movies
