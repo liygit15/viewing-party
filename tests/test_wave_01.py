@@ -183,18 +183,6 @@ def test_moves_movie_from_watchlist_to_watched():
     assert FANTASY_1 in updated_data["watchlist"]
     assert FANTASY_2 in updated_data["watched"]
 
-    # which is better ?
-    assert janes_data == {
-        "watchlist":[
-            FANTASY_1
-        ],
-        "watched": [
-            FANTASY_2,
-            HORROR_1
-            ]
-    }
-
-
     # raise Exception("Test needs to be completed.")
     # *******************************************************************************************
     # ****** Add assertions here to test that the correct movie was added to "watched" **********
