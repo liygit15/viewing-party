@@ -83,7 +83,7 @@ def get_watched_avg_rating(user_data):
 def get_most_watched_genre(user_data):
     genre_frequency = {}
     most_genre = None
-    most_count = -1
+    most_count = 0
     if not user_data["watched"]:
         return None
 
@@ -97,8 +97,6 @@ def get_most_watched_genre(user_data):
             most_genre = genre
     return most_genre
             
-            
-
 
 
 # ------------- WAVE 3 --------------------
