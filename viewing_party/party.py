@@ -114,6 +114,7 @@ def get_available_recs(user_data):
 def get_new_rec_by_genre(user_data):
     most_watched_genre = get_most_watched_genre(user_data)
     recommended_movie = []
+    recs = set()
 
     user_watched = set(movie["title"] for movie in user_data["watched"])
 
@@ -121,8 +122,9 @@ def get_new_rec_by_genre(user_data):
         for movie in friend["watched"]:
             if (movie["title"] not in user_watched and 
                 movie["genre"] == most_watched_genre and
-                movie not in recommended_movie):
+                movie["title"] not in recs):
                 recommended_movie.append(movie)
+                recs.add(movie["title"])
     
     return recommended_movie
 
